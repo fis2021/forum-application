@@ -5,30 +5,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.fis2021.services.FileSystemService;
+import org.fis2021.services.UserService;
 
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
-    private static Scene scene;
-
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
+    public void start(Stage stage) throws Exception {
+        initDirectory();
+        UserService.initDatabase();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/register.fxml"));
+        stage.setTitle("Forum App - registration");
+        stage.setScene(new Scene(root, 640, 480));
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    private void initDirectory() {
+        Path applicationHomePath = FileSystemService.APPLICATION_HOME_PATH;
+        if (!Files.exists(applicationHomePath))
+            applicationHomePath.toFile().mkdirs();
     }
 
     public static void main(String[] args) {
