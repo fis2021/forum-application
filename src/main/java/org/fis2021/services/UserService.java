@@ -42,15 +42,14 @@ public class UserService {
 
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
-        // This is the way a password should be encoded when checking the credentials
         return new String(hashedPassword, StandardCharsets.UTF_8)
-                .replace("\"", ""); //to be able to save in JSON format
+                .replace("\"", "");
     }
 
     private static MessageDigest getMessageDigest() {
         MessageDigest md;
         try {
-            md = MessageDigest.getInstance("SHA-512"); //Algoritm super complicat de codificare a parolei, garantat neluat de la profi
+            md = MessageDigest.getInstance("SHA-512");
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("Toata cryptarea a fost o minciuna!");
         }

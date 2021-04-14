@@ -18,7 +18,7 @@ public class App extends Application {
         initDirectory();
         UserService.initDatabase();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/register.fxml"));
-        stage.setTitle("Forum App - registration");
+        stage.setTitle("Forum App - Registration");
         stage.setScene(new Scene(root, 640, 480));
         stage.show();
     }
