@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.fis2021.exceptions.UserNotFoundException;
+import org.fis2021.models.User;
 import org.fis2021.services.UserService;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class LoginController {
         try{
             String stored_password = UserService.getHashedUserPassword(username);
             if(stored_password.equals(encoded_password)){
-                loginMessage.setText(String.format("Logged in as %s!", username));
+                loadHomePage();
                 return;
             }
 
@@ -55,14 +56,33 @@ public class LoginController {
     }
 
     @FXML
-    public void loadRegisterPage() throws IOException {
+    public void loadRegisterPage(){
         try {
             Stage stage = (Stage) loginMessage.getScene().getWindow();
-            Parent viewStudentsRoot = FXMLLoader.load(getClass().getResource("/fxml/register.fxml"));
-            Scene scene = new Scene(viewStudentsRoot, 640, 480);
+            Parent registerRoot = FXMLLoader.load(getClass().getResource("/fxml/register.fxml"));
+            Scene scene = new Scene(registerRoot, 640, 480);
             stage.setTitle("Forum App - Register");
             stage.setScene(scene);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void loadHomePage(){
+        try{
+            User u = UserService.getUser(usernameField.getText());
+            Stage stage = (Stage) loginMessage.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
+            Parent homeRoot = loader.load();
+            HomeController controller = loader.getController();
+            controller.setUser(u);
+            Scene scene = new Scene(homeRoot, 640, 480);
+            stage.setTitle("Forum App - Home");
+            stage.setScene(scene);
+        } catch (UserNotFoundException e){
+            loginMessage.setText(e.getMessage());
+        } catch (IOException e){
             e.printStackTrace();
         }
     }

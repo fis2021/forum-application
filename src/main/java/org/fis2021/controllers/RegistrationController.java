@@ -44,8 +44,8 @@ public class RegistrationController {
     public void loadLoginPage(){
         try {
             Stage stage = (Stage) registrationMessage.getScene().getWindow();
-            Parent viewStudentsRoot = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
-            Scene scene = new Scene(viewStudentsRoot, 640, 480);
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+            Scene scene = new Scene(loginRoot, 640, 480);
             stage.setTitle("Forum App - Login");
             stage.setScene(scene);
         } catch (IOException e) {
