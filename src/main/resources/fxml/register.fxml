@@ -27,7 +27,8 @@
     </ChoiceBox>
 
     <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button onAction="#handleRegisterAction" text="Register"/>
-    </HBox>
+
+    <Button onAction="#loadLoginPage" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+
+    <Button onAction="#handleRegisterAction" text="Register" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 </GridPane>
