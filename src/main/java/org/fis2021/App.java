@@ -15,6 +15,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setMinHeight(480);
+        stage.setMinWidth(640);
         initDirectory();
         UserService.initDatabase();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
