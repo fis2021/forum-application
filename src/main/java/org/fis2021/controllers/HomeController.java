@@ -13,6 +13,7 @@ import org.fis2021.services.ThreadService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeController{
     @FXML
@@ -21,11 +22,48 @@ public class HomeController{
     @FXML
     private ListView<String> threadsList;
 
+    @FXML
+    private ChoiceBox<String> sortChoice;
+
     private User user;
     private ArrayList<ForumThread> threads;
 
     public void setUser(User u){
         user = u;
+    }
+
+    @FXML
+    public void initialize() {
+        sortChoice.getItems().addAll("Newest", "Oldest");
+        sortChoice.getSelectionModel().select(0);
+        sortChoice.setOnAction((event -> {
+            int selection = sortChoice.getSelectionModel().getSelectedIndex();
+            if(selection == 0){
+                sortThreadsAscending();
+            }
+            else{
+                sortThreadsDescending();
+            }
+        }));
+    }
+
+    @FXML
+    public void sortThreadsAscending(){
+        Collections.sort(threads, (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate()));
+        threadsList.getItems().clear();
+        for(ForumThread t : threads){
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
+        }
+    }
+
+    @FXML
+    public void sortThreadsDescending(){
+        Collections.sort(threads, (o1, o2) -> o1.getCreationDate().compareTo(o2.getCreationDate()));
+        threadsList.getItems().clear();
+        for(ForumThread t : threads){
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
+        }
+        borderPane.setCenter(threadsList);
     }
 
     public void setThreads(){
@@ -37,10 +75,7 @@ public class HomeController{
             borderPane.setCenter(emptyMessage);
             return;
         }
-
-        for(ForumThread t : threads){
-            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
-        }
+        sortThreadsAscending();
     }
 
     public void handleListSelectAction(){
