@@ -4,16 +4,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
+import org.fis2021.exceptions.ThreadAlreadyExistsException;
 import org.fis2021.models.User;
-
+import org.fis2021.services.ThreadService;
 import java.io.IOException;
 
 public class CreateThreadController {
 
     @FXML
     private BorderPane borderPane;
+
+    @FXML
+    private HTMLEditor htmlEditor;
+
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private Label errorMessage;
 
     private User user;
 
@@ -26,8 +39,29 @@ public class CreateThreadController {
     }
 
     @FXML
+    public void handleCreateThreadButton(){
+        String content = htmlEditor.getHtmlText();
+        String title = titleField.getText();
+
+        if(title.isEmpty()
+                || content.equals("<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p><br></p></body></html>")
+                || content.equals("<html dir=\"ltr\"><head></head><body contenteditable=\"true\"></body></html>")){
+            errorMessage.setText("Please fill all fields!");
+            return;
+        }
+
+        try {
+            ThreadService.addThread(title, content, user);
+            loadHomePage();
+        } catch(ThreadAlreadyExistsException e){
+            errorMessage.setText(e.getMessage());
+        }
+    }
+
+    @FXML
     private void loadHomePage() {
         try {
+            ThreadService.closeDatabase();
             Stage stage = (Stage) borderPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
             Parent homeRoot = loader.load();

@@ -15,7 +15,7 @@
       </Button>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
             <Label text="Thread title:">
                <VBox.margin>
@@ -25,7 +25,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <TextField>
+            <TextField fx:id="titleField">
                <VBox.margin>
                   <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                </VBox.margin>
@@ -41,16 +41,24 @@
                   <Insets left="50.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="270.0" prefWidth="500.0">
+            <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="270.0" prefWidth="500.0">
                <VBox.margin>
                   <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                </VBox.margin>
             </HTMLEditor>
+            <StackPane>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="errorMessage" />
+               </children>
+            </StackPane>
          </children>
       </VBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" text="Create" BorderPane.alignment="BOTTOM_RIGHT">
+      <Button mnemonicParsing="false" onAction="#handleCreateThreadButton" text="Create" BorderPane.alignment="BOTTOM_RIGHT">
          <BorderPane.margin>
             <Insets bottom="15.0" right="50.0" />
          </BorderPane.margin>

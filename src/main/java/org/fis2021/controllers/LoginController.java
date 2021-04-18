@@ -77,6 +77,7 @@ public class LoginController {
             Parent homeRoot = loader.load();
             HomeController controller = loader.getController();
             controller.setUser(u);
+            UserService.closeDatabase();
             Scene scene = new Scene(homeRoot, 640, 480);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
