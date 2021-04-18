@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.fis2021.models.ForumThread;
@@ -19,18 +19,32 @@ public class HomeController{
     private BorderPane borderPane;
 
     @FXML
-    private Label placeholderText;
+    private ListView<String> threadsList;
 
     private User user;
     private ArrayList<ForumThread> threads;
 
     public void setUser(User u){
         user = u;
-        placeholderText.setText(String.format("You are logged in as user %s and your role is %s!", u.getUsername(), u.getRole()));
     }
 
     public void setThreads(){
         threads = ThreadService.getAll();
+
+        if(threads.isEmpty()){
+            Label emptyMessage = new Label();
+            emptyMessage.setText("Looks like there are no threads :c");
+            borderPane.setCenter(emptyMessage);
+            return;
+        }
+
+        for(ForumThread t : threads){
+            threadsList.getItems().add(t.getTitle());
+        }
+    }
+
+    public void handleListSelectAction(){
+        System.out.println(threadsList.getSelectionModel().getSelectedItem());
     }
 
     public ArrayList<ForumThread> getThreads(){return threads;}
