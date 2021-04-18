@@ -73,6 +73,7 @@ public class HomeController{
             Label emptyMessage = new Label();
             emptyMessage.setText("Looks like there are no threads :c");
             borderPane.setCenter(emptyMessage);
+            sortChoice.setDisable(true);
             return;
         }
         sortThreadsAscending();
