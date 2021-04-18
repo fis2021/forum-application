@@ -2,23 +2,17 @@ package org.fis2021.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.fis2021.exceptions.UserNotFoundException;
+import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
 import org.fis2021.services.ThreadService;
-import org.fis2021.services.UserService;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 public class HomeController{
     @FXML
@@ -28,11 +22,18 @@ public class HomeController{
     private Label placeholderText;
 
     private User user;
+    private ArrayList<ForumThread> threads;
 
     public void setUser(User u){
         user = u;
         placeholderText.setText(String.format("You are logged in as user %s and your role is %s!", u.getUsername(), u.getRole()));
     }
+
+    public void setThreads(){
+        threads = ThreadService.getAll();
+    }
+
+    public ArrayList<ForumThread> getThreads(){return threads;}
 
     private User getUser(){
         return user;
@@ -41,7 +42,6 @@ public class HomeController{
     @FXML
     private void loadCreateThreadPage(){
         try{
-            ThreadService.initDatabase();
             Stage stage = (Stage) borderPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createThread.fxml"));
             Parent createThreadRoot = loader.load();

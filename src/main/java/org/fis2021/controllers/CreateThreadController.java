@@ -61,12 +61,12 @@ public class CreateThreadController {
     @FXML
     private void loadHomePage() {
         try {
-            ThreadService.closeDatabase();
             Stage stage = (Stage) borderPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
             Parent homeRoot = loader.load();
             HomeController controller = loader.getController();
             controller.setUser(user);
+            controller.setThreads();
             Scene scene = new Scene(homeRoot, 640, 480);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
