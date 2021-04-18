@@ -39,7 +39,7 @@ public class HomeController{
         }
 
         for(ForumThread t : threads){
-            threadsList.getItems().add(t.getTitle());
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
         }
     }
 
