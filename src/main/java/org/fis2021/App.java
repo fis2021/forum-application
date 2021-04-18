@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.fis2021.services.FileSystemService;
+import org.fis2021.services.ThreadService;
 import org.fis2021.services.UserService;
 
 import java.nio.file.Files;
@@ -15,6 +16,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setMinHeight(480);
+        stage.setMinWidth(640);
         initDirectory();
         UserService.initDatabase();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
