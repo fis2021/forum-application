@@ -2,37 +2,88 @@ package org.fis2021.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.fis2021.exceptions.UserNotFoundException;
+import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
 import org.fis2021.services.ThreadService;
-import org.fis2021.services.UserService;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeController{
     @FXML
     private BorderPane borderPane;
 
     @FXML
-    private Label placeholderText;
+    private ListView<String> threadsList;
+
+    @FXML
+    private ChoiceBox<String> sortChoice;
 
     private User user;
+    private ArrayList<ForumThread> threads;
 
     public void setUser(User u){
         user = u;
-        placeholderText.setText(String.format("You are logged in as user %s and your role is %s!", u.getUsername(), u.getRole()));
     }
+
+    @FXML
+    public void initialize() {
+        sortChoice.getItems().addAll("Newest", "Oldest");
+        sortChoice.getSelectionModel().select(0);
+        sortChoice.setOnAction((event -> {
+            int selection = sortChoice.getSelectionModel().getSelectedIndex();
+            if(selection == 0){
+                sortThreadsAscending();
+            }
+            else{
+                sortThreadsDescending();
+            }
+        }));
+    }
+
+    @FXML
+    public void sortThreadsAscending(){
+        Collections.sort(threads, (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate()));
+        threadsList.getItems().clear();
+        for(ForumThread t : threads){
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
+        }
+    }
+
+    @FXML
+    public void sortThreadsDescending(){
+        Collections.sort(threads, (o1, o2) -> o1.getCreationDate().compareTo(o2.getCreationDate()));
+        threadsList.getItems().clear();
+        for(ForumThread t : threads){
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
+        }
+        borderPane.setCenter(threadsList);
+    }
+
+    public void setThreads(){
+        threads = ThreadService.getAll();
+
+        if(threads.isEmpty()){
+            Label emptyMessage = new Label();
+            emptyMessage.setText("Looks like there are no threads :c");
+            borderPane.setCenter(emptyMessage);
+            sortChoice.setDisable(true);
+            return;
+        }
+        sortThreadsAscending();
+    }
+
+    public void handleListSelectAction(){
+        System.out.println(threadsList.getSelectionModel().getSelectedItem());
+    }
+
+    public ArrayList<ForumThread> getThreads(){return threads;}
 
     private User getUser(){
         return user;
@@ -41,7 +92,6 @@ public class HomeController{
     @FXML
     private void loadCreateThreadPage(){
         try{
-            ThreadService.initDatabase();
             Stage stage = (Stage) borderPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createThread.fxml"));
             Parent createThreadRoot = loader.load();

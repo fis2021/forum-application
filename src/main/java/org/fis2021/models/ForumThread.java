@@ -1,19 +1,30 @@
 package org.fis2021.models;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class ForumThread {
     private String title;
     private String content;
     private User author;
+    private Date creationDate;
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public ForumThread(){
     }
 
-    public ForumThread(String title, String content, User author){
+    public ForumThread(String title, String content, User author, Date creationDate){
         this.title = title;
         this.content = content;
         this.author = author;
+        this.creationDate = creationDate;
     }
 
     public String getTitle() {

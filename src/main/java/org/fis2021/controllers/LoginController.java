@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.models.User;
+import org.fis2021.services.ThreadService;
 import org.fis2021.services.UserService;
 
 import java.io.IOException;
@@ -78,6 +79,8 @@ public class LoginController {
             HomeController controller = loader.getController();
             controller.setUser(u);
             UserService.closeDatabase();
+            ThreadService.initDatabase();
+            controller.setThreads();
             Scene scene = new Scene(homeRoot, 640, 480);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
