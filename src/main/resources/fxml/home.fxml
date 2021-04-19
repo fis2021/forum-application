@@ -8,11 +8,21 @@
    <top>
       <HBox alignment="TOP_RIGHT" spacing="5.0" BorderPane.alignment="TOP_RIGHT">
          <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
          </BorderPane.margin>
          <children>
-            <ChoiceBox fx:id="sortChoice" prefWidth="150.0" />
-            <Button mnemonicParsing="false" onAction="#loadCreateThreadPage" text="Create Thread" />
+            <HBox prefHeight="25.0" prefWidth="136.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#loadLoginPage" text="Log out" />
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="247.0" />
+            <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="227.0" spacing="5.0">
+               <children>
+                  <ChoiceBox fx:id="sortChoice" prefHeight="25.0" prefWidth="101.0" />
+                  <Button mnemonicParsing="false" onAction="#loadCreateThreadPage" prefHeight="25.0" prefWidth="105.0" text="Create Thread" />
+               </children>
+            </HBox>
          </children>
       </HBox>
    </top>

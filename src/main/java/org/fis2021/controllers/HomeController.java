@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
 import org.fis2021.services.ThreadService;
+import org.fis2021.services.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,6 +102,21 @@ public class HomeController{
             stage.setTitle("Forum App - Create Thread");
             stage.setScene(scene);
         } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void loadLoginPage(){
+        try {
+            ThreadService.closeDatabase();
+            UserService.initDatabase();
+            Stage stage = (Stage) borderPane.getScene().getWindow();
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+            Scene scene = new Scene(loginRoot, 640, 480);
+            stage.setTitle("Forum App - Login");
+            stage.setScene(scene);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
