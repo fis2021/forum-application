@@ -28,13 +28,21 @@ public class RegistrationController {
     @FXML
     public void initialize() {
         role.getItems().addAll("User", "Moderator");
+        role.getSelectionModel().select(0);
     }
 
     @FXML
     public void handleRegisterAction() {
         try {
+            if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()){
+                registrationMessage.setText("Username/Password cannot be blank!");
+                return;
+            }
             UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
             registrationMessage.setText("Account created successfully!");
+            usernameField.clear();
+            passwordField.clear();
+            role.getSelectionModel().select(0);
         } catch (UsernameAlreadyExistsException e) {
             registrationMessage.setText(e.getMessage());
         }
