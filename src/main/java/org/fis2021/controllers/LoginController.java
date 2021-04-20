@@ -24,6 +24,10 @@ public class LoginController {
     @FXML
     public TextField usernameField;
 
+    public void setRegistrationConfirmation(){
+        loginMessage.setText("Account created successfully!");
+    }
+
     @FXML
     public void handleLoginAction() {
         String username = usernameField.getText();
