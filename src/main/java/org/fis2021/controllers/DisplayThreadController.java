@@ -31,10 +31,14 @@ public class DisplayThreadController {
         return forumThread;
     }
 
+    @FXML
+    private Label author;
+
     public void setForumThread(ForumThread forumThread) {
         this.forumThread = forumThread;
         title.setText(forumThread.getTitle());
         webView.getEngine().loadContent(forumThread.getContent());
+        author.setText("Author:  " + forumThread.getAuthor().getUsername());
     }
 
     @FXML

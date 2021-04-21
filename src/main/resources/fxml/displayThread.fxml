@@ -19,10 +19,18 @@
          <children>
             <Label fx:id="title">
                <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="50.0" />
+                  <Insets bottom="5.0" left="50.0" right="50.0" />
                </VBox.margin>
                <font>
                   <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="author">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="50.0" right="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
                </font>
             </Label>
             <WebView fx:id="webView" prefHeight="259.0" prefWidth="500.0">
