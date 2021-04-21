@@ -81,7 +81,11 @@ public class HomeController{
     }
 
     public void handleListSelectAction(){
-        loadDisplayThreadPage();
+        try {
+            loadDisplayThreadPage(threads.get(threadsList.getSelectionModel().getSelectedIndex()).getTitle());
+        }catch(IndexOutOfBoundsException e){
+            return;
+        }
     }
 
     public ArrayList<ForumThread> getThreads(){return threads;}
@@ -122,13 +126,13 @@ public class HomeController{
     }
 
     @FXML
-    private void loadDisplayThreadPage(){
+    private void loadDisplayThreadPage(String title){
         try {
             Stage stage = (Stage) borderPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/displayThread.fxml"));
             Parent displayThreadRoot = loader.load();
             DisplayThreadController controller = loader.getController();
-            controller.setForumThread(threads.get(0));
+            controller.setForumThread(ThreadService.getThread(title));
             Scene scene = new Scene(displayThreadRoot, 640, 480);
             stage.setTitle("Forum App - Display Thread");
             stage.setScene(scene);
