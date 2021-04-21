@@ -81,7 +81,7 @@ public class HomeController{
     }
 
     public void handleListSelectAction(){
-        System.out.println(threadsList.getSelectionModel().getSelectedItem());
+        loadDisplayThreadPage();
     }
 
     public ArrayList<ForumThread> getThreads(){return threads;}
@@ -115,6 +115,22 @@ public class HomeController{
             Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
             Scene scene = new Scene(loginRoot, 640, 480);
             stage.setTitle("Forum App - Login");
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void loadDisplayThreadPage(){
+        try {
+            Stage stage = (Stage) borderPane.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/displayThread.fxml"));
+            Parent displayThreadRoot = loader.load();
+            DisplayThreadController controller = loader.getController();
+            controller.setForumThread(threads.get(0));
+            Scene scene = new Scene(displayThreadRoot, 640, 480);
+            stage.setTitle("Forum App - Display Thread");
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
