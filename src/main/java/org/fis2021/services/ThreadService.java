@@ -5,6 +5,7 @@ import org.dizitart.no2.objects.Cursor;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.fis2021.exceptions.ThreadAlreadyExistsException;
+import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
 
@@ -52,4 +53,10 @@ public class ThreadService {
             }
         }
     }
+
+    public static ForumThread getThread(String title) {
+        Cursor<ForumThread> cursor = threadRepository.find(ObjectFilters.eq("title", title));
+        return cursor.firstOrDefault();
+    }
+
 }
