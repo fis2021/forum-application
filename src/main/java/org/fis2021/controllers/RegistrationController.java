@@ -39,12 +39,19 @@ public class RegistrationController {
                 return;
             }
             UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
-            registrationMessage.setText("Account created successfully!");
-            usernameField.clear();
-            passwordField.clear();
-            role.getSelectionModel().select(0);
+            Stage stage = (Stage) registrationMessage.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            Parent loginRoot = loader.load();
+            LoginController controller = loader.getController();
+            controller.setRegistrationConfirmation();
+            Scene scene = new Scene(loginRoot, 640, 480);
+            stage.setTitle("Forum App - Login");
+            stage.setScene(scene);
+
         } catch (UsernameAlreadyExistsException e) {
             registrationMessage.setText(e.getMessage());
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
