@@ -82,6 +82,7 @@ public class LoginController {
             Parent homeRoot = loader.load();
             HomeController controller = loader.getController();
             controller.setUser(u);
+            stage.setUserData(u);
             UserService.closeDatabase();
             ThreadService.initDatabase();
             controller.setThreads();
