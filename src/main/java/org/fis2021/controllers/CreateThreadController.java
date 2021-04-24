@@ -51,6 +51,9 @@ public class CreateThreadController {
         }
 
         try {
+            if(user == null){
+                user = (User) ((Stage) borderPane.getScene().getWindow()).getUserData();
+            }
             ThreadService.addThread(title, content, user);
             loadHomePage();
         } catch(ThreadAlreadyExistsException e){
