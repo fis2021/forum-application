@@ -32,7 +32,7 @@ public class ThreadService {
         database.close();
     }
 
-    public static void addThread(String title, String content, User user) throws ThreadAlreadyExistsException{
+    public static void addThread(String title, String content, String user) throws ThreadAlreadyExistsException{
         checkThreadDoesNotAlreadyExist(title);
         threadRepository.insert(new ForumThread(title, content, user, new Date()));
     }
@@ -44,6 +44,15 @@ public class ThreadService {
             threads.add(f);
         }
         return threads;
+    }
+
+    public static ArrayList<ForumThread> getAllByUser(String owner){
+            ArrayList<ForumThread> threads = new ArrayList<ForumThread>();
+            Cursor<ForumThread> cursor = threadRepository.find(ObjectFilters.eq("author", owner));
+            for (ForumThread f : cursor) {
+                threads.add(f);
+            }
+            return threads;
     }
 
     public static void checkThreadDoesNotAlreadyExist(String title) throws ThreadAlreadyExistsException{

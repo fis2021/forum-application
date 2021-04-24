@@ -6,7 +6,7 @@ import java.util.Objects;
 public class ForumThread {
     private String title;
     private String content;
-    private User author;
+    private String author;
     private Date creationDate;
 
     public Date getCreationDate() {
@@ -20,7 +20,7 @@ public class ForumThread {
     public ForumThread(){
     }
 
-    public ForumThread(String title, String content, User author, Date creationDate){
+    public ForumThread(String title, String content, String author, Date creationDate){
         this.title = title;
         this.content = content;
         this.author = author;
@@ -43,11 +43,11 @@ public class ForumThread {
         this.content = content;
     }
 
-    public User getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

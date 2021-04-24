@@ -53,7 +53,7 @@ public class HomeController{
         Collections.sort(threads, (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate()));
         threadsList.getItems().clear();
         for(ForumThread t : threads){
-            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
     }
 
@@ -62,7 +62,7 @@ public class HomeController{
         Collections.sort(threads, (o1, o2) -> o1.getCreationDate().compareTo(o2.getCreationDate()));
         threadsList.getItems().clear();
         for(ForumThread t : threads){
-            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor().getUsername());
+            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
         borderPane.setCenter(threadsList);
     }
@@ -133,6 +133,7 @@ public class HomeController{
             Parent displayThreadRoot = loader.load();
             DisplayThreadController controller = loader.getController();
             controller.setForumThread(ThreadService.getThread(title));
+            controller.setUser(user);
             Scene scene = new Scene(displayThreadRoot, 640, 480);
             stage.setTitle("Forum App - Display Thread");
             stage.setScene(scene);
