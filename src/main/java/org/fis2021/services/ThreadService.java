@@ -68,4 +68,8 @@ public class ThreadService {
         return cursor.firstOrDefault();
     }
 
+    public static void updateThread(ForumThread forumThread){
+        threadRepository.update(forumThread);
+    }
+
 }

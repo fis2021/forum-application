@@ -134,6 +134,7 @@ public class HomeController{
             DisplayThreadController controller = loader.getController();
             controller.setForumThread(ThreadService.getThread(title));
             controller.setUser(user);
+            controller.setListValues();
             Scene scene = new Scene(displayThreadRoot, 640, 480);
             stage.setTitle("Forum App - Display Thread");
             stage.setScene(scene);

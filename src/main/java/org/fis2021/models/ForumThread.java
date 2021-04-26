@@ -1,21 +1,18 @@
 package org.fis2021.models;
 
+import org.dizitart.no2.objects.Id;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
 public class ForumThread {
+    @Id
     private String title;
     private String content;
     private String author;
     private Date creationDate;
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
+    private ArrayList<ThreadReply> replies;
 
     public ForumThread(){
     }
@@ -24,6 +21,14 @@ public class ForumThread {
         this.title = title;
         this.content = content;
         this.author = author;
+        this.creationDate = creationDate;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -49,6 +54,14 @@ public class ForumThread {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public ArrayList<ThreadReply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(ArrayList<ThreadReply> replies) {
+        this.replies = replies;
     }
 
     @Override

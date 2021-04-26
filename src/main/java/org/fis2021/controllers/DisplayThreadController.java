@@ -6,13 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.fis2021.models.ForumThread;
+import org.fis2021.models.ThreadReply;
 import org.fis2021.models.User;
+import org.fis2021.services.ThreadService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DisplayThreadController {
 
@@ -34,6 +39,34 @@ public class DisplayThreadController {
 
     @FXML
     private Hyperlink author;
+
+    @FXML
+    private ListView<String> repliesList;
+
+    @FXML
+    private TextArea textArea;
+
+    public void setListValues(){
+        repliesList.getItems().clear();
+        if(forumThread.getReplies()!=null){
+            for(ThreadReply t : forumThread.getReplies()){
+                repliesList.getItems().add(t.getContent() + "\nAuthor: " + t.getAuthor());
+            }
+        }
+    }
+
+    @FXML
+    public void handleReplyButton(){
+        String message = textArea.getText();
+        ArrayList<ThreadReply> replyAuxiliary = forumThread.getReplies();
+        if(replyAuxiliary == null){
+            forumThread.setReplies(new ArrayList<ThreadReply>());
+        }
+        forumThread.getReplies().add(new ThreadReply(user.getUsername(), message));
+        setListValues();
+        textArea.clear();
+        ThreadService.updateThread(forumThread);
+    }
 
     public void setForumThread(ForumThread forumThread) {
         this.forumThread = forumThread;
