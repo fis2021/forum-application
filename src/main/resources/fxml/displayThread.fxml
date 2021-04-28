@@ -6,55 +6,78 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.DisplayThreadController">
-   <top>
-      <Button mnemonicParsing="false" onAction="#loadHomePage" text="Home" BorderPane.alignment="CENTER_RIGHT">
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </Button>
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="title">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="50.0" right="50.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <HBox>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="50.0" />
-               </VBox.margin>
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.DisplayThreadController">
+   <content>
+      <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="600.0">
+         <top>
+            <Button mnemonicParsing="false" onAction="#loadHomePage" text="Home" BorderPane.alignment="CENTER_RIGHT">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </Button>
+         </top>
+         <center>
+            <VBox fx:id="threadVBox" prefHeight="546.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label prefHeight="29.0" text="Author: ">
+                  <Label fx:id="title">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="50.0" right="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="50.0" right="50.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label prefHeight="29.0" text="Author: ">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Hyperlink fx:id="author" onAction="#handleHyperLink">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </HBox>
+                  <WebView fx:id="webView" prefHeight="259.0" prefWidth="500.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </WebView>
+                  <Label fx:id="commentsLabel" text="Comments:">
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
                   </Label>
-                  <Hyperlink fx:id="author" onAction="#handleHyperLink">
-                     <font>
-                        <Font size="15.0" />
-                     </font></Hyperlink>
+                  <ListView fx:id="repliesList" prefHeight="0.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </ListView>
+                  <TextArea fx:id="textArea" prefHeight="106.0" prefWidth="500.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <HBox alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="500.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleReplyButton" text="Reply" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
-            </HBox>
-            <WebView fx:id="webView" prefHeight="259.0" prefWidth="500.0">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
-               </VBox.margin>
-            </WebView>
-            <HBox alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="500.0">
-               <children>
-                  <Button mnemonicParsing="false" text="Reply" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+            </VBox>
+         </center>
+      </BorderPane>
+   </content>
+</ScrollPane>
