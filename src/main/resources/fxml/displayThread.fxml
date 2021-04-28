@@ -8,7 +8,7 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.controllers.DisplayThreadController">
    <content>
-      <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="600.0">
+      <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="600.0">
          <top>
             <Button mnemonicParsing="false" onAction="#loadHomePage" text="Home" BorderPane.alignment="CENTER_RIGHT">
                <BorderPane.margin>
@@ -17,7 +17,7 @@
             </Button>
          </top>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="threadVBox" prefHeight="546.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="title">
                      <VBox.margin>
@@ -49,12 +49,20 @@
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin>
                   </WebView>
-                  <ListView fx:id="repliesList" prefHeight="444.0" prefWidth="500.0">
+                  <Label fx:id="commentsLabel" text="Comments:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ListView fx:id="repliesList" prefHeight="0.0" prefWidth="200.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin>
                   </ListView>
-                  <TextArea fx:id="textArea" prefHeight="141.0" prefWidth="500.0">
+                  <TextArea fx:id="textArea" prefHeight="106.0" prefWidth="500.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin>

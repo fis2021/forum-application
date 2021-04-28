@@ -136,7 +136,7 @@ public class HomeController{
             controller.setUser(user);
             controller.setListValues();
             Scene scene = new Scene(displayThreadRoot, 640, 480);
-            stage.setTitle("Forum App - Display Thread");
+            stage.setTitle("Forum App - " + title);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

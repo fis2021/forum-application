@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.fis2021.models.ForumThread;
@@ -46,12 +47,52 @@ public class DisplayThreadController {
     @FXML
     private TextArea textArea;
 
+    @FXML
+    private VBox threadVBox;
+
+    public void initialize(){
+        textArea.setPromptText("Type in your reply...");
+        textArea.getParent().requestFocus();
+    }
+
     public void setListValues(){
+        long modifier = 0;
         repliesList.getItems().clear();
         if(forumThread.getReplies()!=null){
             for(ThreadReply t : forumThread.getReplies()){
+                modifier += t.getContent().chars().filter(ch -> ch == '\n').count() + 1;
                 repliesList.getItems().add(t.getContent() + "\nAuthor: " + t.getAuthor());
             }
+            if(20 * (modifier + forumThread.getReplies().size()) <= 440) {
+                repliesList.setPrefHeight(20 * (modifier + forumThread.getReplies().size()));
+                borderPane.setPrefHeight(640 + 20 * (modifier + forumThread.getReplies().size()));
+            }
+            else{
+                repliesList.setPrefHeight(440);
+                borderPane.setPrefHeight(440 + 640);
+            }
+        }
+        else{
+            threadVBox.getChildren().remove(3);
+            threadVBox.getChildren().remove(3);
+            borderPane.setPrefHeight(590);
+        }
+    }
+
+    private void loadDisplayThreadPage(String title){
+        try {
+            Stage stage = (Stage) borderPane.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/displayThread.fxml"));
+            Parent displayThreadRoot = loader.load();
+            DisplayThreadController controller = loader.getController();
+            controller.setForumThread(ThreadService.getThread(title));
+            controller.setUser(user);
+            controller.setListValues();
+            Scene scene = new Scene(displayThreadRoot, 640, 480);
+            stage.setTitle("Forum App - " + title);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -66,6 +107,9 @@ public class DisplayThreadController {
         setListValues();
         textArea.clear();
         ThreadService.updateThread(forumThread);
+        if(forumThread.getReplies().size() == 1){
+            loadDisplayThreadPage(forumThread.getTitle());
+        }
     }
 
     public void setForumThread(ForumThread forumThread) {
