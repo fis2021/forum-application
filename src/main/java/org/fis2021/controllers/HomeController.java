@@ -61,6 +61,12 @@ public class HomeController{
         for(ForumThread t : threads){
             threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
+        if(41 * threads.size() <= 697){
+            threadsList.setPrefHeight(41 * threads.size());
+        }
+        else{
+            threadsList.setPrefHeight(697);
+        }
     }
 
     @FXML
@@ -70,7 +76,12 @@ public class HomeController{
         for(ForumThread t : threads){
             threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
-        borderPane.setCenter(threadsList);
+        if(41 * threads.size() <= 697){
+            threadsList.setPrefHeight(41 * threads.size());
+        }
+        else{
+            threadsList.setPrefHeight(697);
+        }
     }
 
     public void setThreads(){

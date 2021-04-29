@@ -56,6 +56,12 @@ public class DisplayProfileController {
         for(ForumThread t : threadsList){
             threads.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
+        if(41 * threadsList.size() <= 697){
+            threads.setPrefHeight(41 * threadsList.size());
+        }
+        else{
+            threads.setPrefHeight(697);
+        }
     }
 
     public String getPreviousThreadTitle() {
