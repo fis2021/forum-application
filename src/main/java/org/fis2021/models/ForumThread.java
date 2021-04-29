@@ -13,6 +13,7 @@ public class ForumThread {
     private String author;
     private Date creationDate;
     private ArrayList<ThreadReply> replies;
+    private boolean isClosed = false;
 
     public ForumThread(){
     }
@@ -22,6 +23,14 @@ public class ForumThread {
         this.content = content;
         this.author = author;
         this.creationDate = creationDate;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public void setClosed(boolean closed) {
+        isClosed = closed;
     }
 
     public Date getCreationDate() {

@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -50,6 +47,14 @@ public class DisplayThreadController {
     @FXML
     private VBox threadVBox;
 
+    @FXML
+    private Label closedMessage;
+
+    @FXML
+    private Button replyButton;
+
+    private int BASE_SIZE = 640;
+
     public void initialize(){
         textArea.setPromptText("Type in your reply...");
         textArea.getParent().requestFocus();
@@ -65,17 +70,17 @@ public class DisplayThreadController {
             }
             if(20 * (modifier + forumThread.getReplies().size()) <= 440) {
                 repliesList.setPrefHeight(20 * (modifier + forumThread.getReplies().size()));
-                borderPane.setPrefHeight(640 + 20 * (modifier + forumThread.getReplies().size()));
+                borderPane.setPrefHeight(BASE_SIZE + 50 + 20 * (modifier + forumThread.getReplies().size()));
             }
             else{
                 repliesList.setPrefHeight(440);
-                borderPane.setPrefHeight(440 + 640);
+                borderPane.setPrefHeight(440 + BASE_SIZE + 50);
             }
         }
         else{
             threadVBox.getChildren().remove(3);
             threadVBox.getChildren().remove(3);
-            borderPane.setPrefHeight(590);
+            borderPane.setPrefHeight(BASE_SIZE);
         }
     }
 
@@ -117,6 +122,9 @@ public class DisplayThreadController {
         title.setText(forumThread.getTitle());
         webView.getEngine().loadContent(forumThread.getContent());
         author.setText(forumThread.getAuthor());
+        closedMessage.setVisible(forumThread.isClosed());
+        textArea.setDisable(forumThread.isClosed());
+        replyButton.setDisable(forumThread.isClosed());
     }
 
     @FXML

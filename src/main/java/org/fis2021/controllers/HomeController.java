@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.fis2021.models.ForumThread;
@@ -15,6 +17,7 @@ import org.fis2021.services.UserService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 public class HomeController{
     @FXML
@@ -28,6 +31,7 @@ public class HomeController{
 
     private User user;
     private ArrayList<ForumThread> threads;
+    private ContextMenu menu;
 
     public void setUser(User u){
         user = u;
@@ -46,6 +50,8 @@ public class HomeController{
                 sortThreadsDescending();
             }
         }));
+        menu = new ContextMenu();
+        threadsList.setContextMenu(menu);
     }
 
     @FXML
@@ -80,9 +86,43 @@ public class HomeController{
         sortThreadsAscending();
     }
 
-    public void handleListSelectAction(){
+    public void handleListSelectAction(MouseEvent event){
         try {
-            loadDisplayThreadPage(threads.get(threadsList.getSelectionModel().getSelectedIndex()).getTitle());
+            if(event.getButton() == MouseButton.PRIMARY){
+                loadDisplayThreadPage(threads.get(threadsList.getSelectionModel().getSelectedIndex()).getTitle());
+            }
+            else if(event.getButton() == MouseButton.SECONDARY && user.getRole().equals("Moderator")) {
+                threadsList.getContextMenu().getItems().clear();
+                if (threadsList.getSelectionModel().getSelectedIndex() >= 0) {
+                    threadsList.getContextMenu().getItems().add(new MenuItem("Close thread"));
+                    threadsList.getContextMenu().getItems().get(0).setOnAction(
+                            (x) -> {
+                                if(threads.get(threadsList.getSelectionModel().getSelectedIndex()).isClosed()){
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Close thread");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("This thread has already been closed!");
+                                    Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                    yes_button.setDefaultButton(false);
+                                    alert.showAndWait();
+                                }
+                                else {
+                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                    alert.setTitle("Close thread");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("Are you sure you want to close this thread?\nThis action is permanent!");
+                                    Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                    yes_button.setDefaultButton(false);
+                                    Optional<ButtonType> result = alert.showAndWait();
+                                    if (result.get().equals(ButtonType.OK)) {
+                                        threads.get(threadsList.getSelectionModel().getSelectedIndex()).setClosed(true);
+                                        ThreadService.updateThread(threads.get(threadsList.getSelectionModel().getSelectedIndex()));
+                                    }
+                                }
+                            }
+                    );
+                }
+            }
         }catch(IndexOutOfBoundsException e){
             return;
         }
