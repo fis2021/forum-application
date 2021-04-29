@@ -65,7 +65,7 @@ public class LoginController {
         try {
             Stage stage = (Stage) loginMessage.getScene().getWindow();
             Parent registerRoot = FXMLLoader.load(getClass().getResource("/fxml/register.fxml"));
-            Scene scene = new Scene(registerRoot, 640, 480);
+            Scene scene = new Scene(registerRoot, 640, 800);
             stage.setTitle("Forum App - Register");
             stage.setScene(scene);
         } catch (IOException e) {
@@ -86,7 +86,7 @@ public class LoginController {
             UserService.closeDatabase();
             ThreadService.initDatabase();
             controller.setThreads();
-            Scene scene = new Scene(homeRoot, 640, 480);
+            Scene scene = new Scene(homeRoot, 640, 800);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
         } catch (UserNotFoundException e){

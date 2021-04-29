@@ -70,7 +70,7 @@ public class CreateThreadController {
             HomeController controller = loader.getController();
             controller.setUser(user);
             controller.setThreads();
-            Scene scene = new Scene(homeRoot, 640, 480);
+            Scene scene = new Scene(homeRoot, 640, 800);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
         } catch (IOException e) {

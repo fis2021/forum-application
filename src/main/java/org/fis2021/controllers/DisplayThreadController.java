@@ -93,7 +93,7 @@ public class DisplayThreadController {
             controller.setForumThread(ThreadService.getThread(title));
             controller.setUser(user);
             controller.setListValues();
-            Scene scene = new Scene(displayThreadRoot, 640, 480);
+            Scene scene = new Scene(displayThreadRoot, 640, 800);
             stage.setTitle("Forum App - " + title);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -145,7 +145,7 @@ public class DisplayThreadController {
             HomeController controller = loader.getController();
             controller.setUser(user);
             controller.setThreads();
-            Scene scene = new Scene(homeRoot, 640, 480);
+            Scene scene = new Scene(homeRoot, 640, 800);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
         } catch (IOException e) {
@@ -168,7 +168,7 @@ public class DisplayThreadController {
             controller.setUser(user);
             controller.setPreviousThreadTitle(forumThread.getTitle());
             controller.setDisplayedUsername(forumThread.getAuthor());
-            Scene scene = new Scene(displayProfileRoot, 640, 480);
+            Scene scene = new Scene(displayProfileRoot, 640, 800);
             stage.setTitle("Forum App - " + displayUsername);
             stage.setScene(scene);
         } catch (IOException e) {

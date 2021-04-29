@@ -61,6 +61,12 @@ public class HomeController{
         for(ForumThread t : threads){
             threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
+        if(41 * threads.size() <= 697){
+            threadsList.setPrefHeight(41 * threads.size());
+        }
+        else{
+            threadsList.setPrefHeight(697);
+        }
     }
 
     @FXML
@@ -70,7 +76,12 @@ public class HomeController{
         for(ForumThread t : threads){
             threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
         }
-        borderPane.setCenter(threadsList);
+        if(41 * threads.size() <= 697){
+            threadsList.setPrefHeight(41 * threads.size());
+        }
+        else{
+            threadsList.setPrefHeight(697);
+        }
     }
 
     public void setThreads(){
@@ -142,7 +153,7 @@ public class HomeController{
             Parent createThreadRoot = loader.load();
             CreateThreadController controller = loader.getController();
             controller.setUser(user);
-            Scene scene = new Scene(createThreadRoot, 640, 480);
+            Scene scene = new Scene(createThreadRoot, 640, 800);
             stage.setTitle("Forum App - Create Thread");
             stage.setScene(scene);
         } catch (IOException e){
@@ -157,7 +168,7 @@ public class HomeController{
             UserService.initDatabase();
             Stage stage = (Stage) borderPane.getScene().getWindow();
             Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
-            Scene scene = new Scene(loginRoot, 640, 480);
+            Scene scene = new Scene(loginRoot, 640, 800);
             stage.setTitle("Forum App - Login");
             stage.setScene(scene);
         } catch (IOException e) {
@@ -175,7 +186,7 @@ public class HomeController{
             controller.setForumThread(ThreadService.getThread(title));
             controller.setUser(user);
             controller.setListValues();
-            Scene scene = new Scene(displayThreadRoot, 640, 480);
+            Scene scene = new Scene(displayThreadRoot, 640, 800);
             stage.setTitle("Forum App - " + title);
             stage.setScene(scene);
         } catch (IOException e) {

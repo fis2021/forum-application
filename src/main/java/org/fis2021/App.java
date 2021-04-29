@@ -16,13 +16,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setMinHeight(480);
-        stage.setMinWidth(640);
+        stage.setHeight(800);
+        stage.setWidth(640);
+        stage.setResizable(false);
         initDirectory();
         UserService.initDatabase();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         stage.setTitle("Forum App - Login");
-        stage.setScene(new Scene(root, 640, 480));
+        stage.setScene(new Scene(root, 640, 800));
         stage.show();
     }
 
