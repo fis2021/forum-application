@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -16,6 +18,7 @@ import org.fis2021.services.ThreadService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class DisplayThreadController {
 
@@ -55,9 +58,14 @@ public class DisplayThreadController {
 
     private int BASE_SIZE = 640;
 
+    private ContextMenu contextMenu;
+
+
     public void initialize(){
         textArea.setPromptText("Type in your reply...");
         textArea.getParent().requestFocus();
+        contextMenu = new ContextMenu();
+        repliesList.setContextMenu(contextMenu);
     }
 
     public void setListValues(){
@@ -114,6 +122,44 @@ public class DisplayThreadController {
         ThreadService.updateThread(forumThread);
         if(forumThread.getReplies().size() == 1){
             loadDisplayThreadPage(forumThread.getTitle());
+        }
+    }
+
+    @FXML
+    public void handleListAction(MouseEvent event){
+        if(event.getButton() == MouseButton.SECONDARY && user.getRole().equals("Moderator")){
+            repliesList.getContextMenu().getItems().clear();
+            if (repliesList.getSelectionModel().getSelectedIndex() >= 0) {
+                repliesList.getContextMenu().getItems().add(new MenuItem("Delete reply"));
+                repliesList.getContextMenu().getItems().get(0).setOnAction(
+                        (x) -> {
+                            if(forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).isDeleted()){
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Delete reply");
+                                alert.setHeaderText(null);
+                                alert.setContentText("This reply has already been deleted!");
+                                Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                yes_button.setDefaultButton(false);
+                                alert.showAndWait();
+                            }
+                            else {
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                alert.setTitle("Delete reply");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Are you sure you want to delte this reply?\nThis action is permanent!");
+                                Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                yes_button.setDefaultButton(false);
+                                Optional<ButtonType> result = alert.showAndWait();
+                                if (result.get().equals(ButtonType.OK)) {
+                                    forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).setDeleted(true);
+                                    forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).setContent("[Deleted]");
+                                    ThreadService.updateThread(forumThread);
+                                    setListValues();
+                                }
+                            }
+                        }
+                );
+            }
         }
     }
 

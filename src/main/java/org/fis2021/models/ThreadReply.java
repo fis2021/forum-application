@@ -6,6 +6,7 @@ public class ThreadReply {
 
     private String author;
     private String content;
+    private boolean isDeleted = false;
 
     public ThreadReply() {
     }
@@ -13,6 +14,14 @@ public class ThreadReply {
     public ThreadReply(String author, String content) {
         this.author = author;
         this.content = content;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public String getAuthor() {
