@@ -89,7 +89,7 @@ public class DisplayProfileController {
             controller.setForumThread(ThreadService.getThread(title));
             controller.setUser(user);
             controller.setListValues();
-            Scene scene = new Scene(displayThreadRoot, 640, 480);
+            Scene scene = new Scene(displayThreadRoot, 640, 800);
             stage.setTitle("Forum App - " + title);
             stage.setScene(scene);
         } catch (IOException e) {

@@ -44,7 +44,7 @@ public class RegistrationController {
             Parent loginRoot = loader.load();
             LoginController controller = loader.getController();
             controller.setRegistrationConfirmation();
-            Scene scene = new Scene(loginRoot, 640, 480);
+            Scene scene = new Scene(loginRoot, 640, 800);
             stage.setTitle("Forum App - Login");
             stage.setScene(scene);
 

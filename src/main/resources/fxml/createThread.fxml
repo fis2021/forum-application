@@ -54,14 +54,15 @@
                   <Label fx:id="errorMessage" />
                </children>
             </StackPane>
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleCreateThreadButton" text="Create" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
    </center>
-   <bottom>
-      <Button mnemonicParsing="false" onAction="#handleCreateThreadButton" text="Create" BorderPane.alignment="BOTTOM_RIGHT">
-         <BorderPane.margin>
-            <Insets bottom="15.0" right="50.0" />
-         </BorderPane.margin>
-      </Button>
-   </bottom>
 </BorderPane>
