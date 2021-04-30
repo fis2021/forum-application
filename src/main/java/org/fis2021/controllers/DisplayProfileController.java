@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
@@ -37,6 +38,12 @@ public class DisplayProfileController {
     private ArrayList<ForumThread> threadsList;
 
     private String previousThreadTitle;
+
+    @FXML
+    private Button banUserButton;
+
+    @FXML
+    private VBox vBox;
 
     public String getDisplayedUsername() {
         return displayedUsername;
@@ -83,6 +90,9 @@ public class DisplayProfileController {
 
     public void setUser(User user) {
         this.user = user;
+        if(!user.getRole().equals("Moderator")){
+            vBox.getChildren().remove(2);
+        }
     }
 
     @FXML
