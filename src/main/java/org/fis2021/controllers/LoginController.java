@@ -48,7 +48,12 @@ public class LoginController {
         try{
             String stored_password = UserService.getHashedUserPassword(username);
             if(stored_password.equals(encoded_password)){
-                loadHomePage();
+                if(!UserService.getUser(username).isBanned()) {
+                    loadHomePage();
+                }
+                else{
+                    loginMessage.setText("You have been banned!");
+                }
                 return;
             }
 

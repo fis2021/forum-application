@@ -12,9 +12,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
 import org.fis2021.services.ThreadService;
+import org.fis2021.services.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,6 +70,15 @@ public class DisplayProfileController {
                 threads.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
             }
         }
+        ThreadService.closeDatabase();
+        UserService.initDatabase();
+        try {
+            if (UserService.getUser(displayedUsername).getRole().equals("Moderator") && vBox.getChildren().size() > 2) {
+                vBox.getChildren().remove(2);
+            }
+        }catch(UserNotFoundException ignored){ }
+        UserService.closeDatabase();
+        ThreadService.initDatabase();
         if(41 * threadsList.size() <= 697){
             threads.setPrefHeight(41 * threadsList.size());
         }
@@ -90,7 +101,7 @@ public class DisplayProfileController {
 
     public void setUser(User user) {
         this.user = user;
-        if(!user.getRole().equals("Moderator")){
+        if(!user.getRole().equals("Moderator") && vBox.getChildren().size() > 2){
             vBox.getChildren().remove(2);
         }
     }
@@ -209,4 +220,26 @@ public class DisplayProfileController {
         }
     }
 
+    @FXML
+    public void handleBanAction(){
+        ThreadService.closeDatabase();
+        UserService.initDatabase();
+        User userAux = new User();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Ban User");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to ban this user?\nThis action is permanent!");
+        Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+        yes_button.setDefaultButton(false);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)) {
+            try {
+                userAux = UserService.getUser(displayedUsername);
+            }catch(UserNotFoundException ignored){ }
+            userAux.setBanned(true);
+            UserService.updateUser(userAux);
+        }
+        UserService.closeDatabase();
+        ThreadService.initDatabase();
+    }
 }

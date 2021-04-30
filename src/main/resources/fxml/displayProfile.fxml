@@ -33,7 +33,7 @@
                </VBox.margin></ListView>
             <HBox alignment="TOP_RIGHT">
                <children>
-                  <Button fx:id="banUserButton" mnemonicParsing="false" text="Ban User" />
+                  <Button fx:id="banUserButton" mnemonicParsing="false" onAction="#handleBanAction" text="Ban User" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="10.0" />

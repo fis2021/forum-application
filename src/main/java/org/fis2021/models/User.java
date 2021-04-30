@@ -1,10 +1,14 @@
 package org.fis2021.models;
 
+import org.dizitart.no2.objects.Id;
+
 public class User {
 
+    @Id
     private String username;
     private String password;
     private String role;
+    private boolean isBanned = false;
 
     public User() {
     }
@@ -37,6 +41,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 
     @Override

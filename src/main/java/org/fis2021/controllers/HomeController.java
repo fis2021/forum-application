@@ -9,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.models.ForumThread;
 import org.fis2021.models.User;
 import org.fis2021.services.ThreadService;
@@ -58,14 +59,32 @@ public class HomeController{
     public void sortThreadsAscending(){
         Collections.sort(threads, (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate()));
         threadsList.getItems().clear();
+        ThreadService.closeDatabase();
+        UserService.initDatabase();
         for(ForumThread t : threads) {
             if (!t.isDeleted()) {
-                threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+                try{
+                    if(UserService.getUser(t.getAuthor()).isBanned()){
+                        threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: [Banned]");
+                    }
+                    else{
+                        threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+                    }
+                }catch (UserNotFoundException ignored){ }
             }
             else{
-                threadsList.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
+                try{
+                    if(UserService.getUser(t.getAuthor()).isBanned()){
+                        threadsList.getItems().add("Title: [Deleted]\n" + "Author: [Banned]");
+                    }
+                    else{
+                        threadsList.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
+                    }
+                }catch (UserNotFoundException ignored){ }
             }
         }
+        UserService.closeDatabase();
+        ThreadService.initDatabase();
         if(41 * threads.size() <= 697){
             threadsList.setPrefHeight(41 * threads.size());
         }
