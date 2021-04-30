@@ -68,6 +68,14 @@ public class ThreadService {
         return cursor.firstOrDefault();
     }
 
+    public static void setThreadAsDeleted(String title){
+        ForumThread f = getThread(title);
+        if(f!=null) {
+            f.setDeleted(true);
+            threadRepository.update(f);
+        }
+    }
+
     public static void updateThread(ForumThread forumThread){
         threadRepository.update(forumThread);
     }

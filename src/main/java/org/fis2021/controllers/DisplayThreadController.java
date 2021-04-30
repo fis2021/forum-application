@@ -127,35 +127,26 @@ public class DisplayThreadController {
 
     @FXML
     public void handleListAction(MouseEvent event){
-        if(event.getButton() == MouseButton.SECONDARY && user.getRole().equals("Moderator")){
+        repliesList.getContextMenu().getItems().clear();
+        if(event.getButton() == MouseButton.SECONDARY && user.getRole().equals("Moderator") && !forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).isDeleted()){
             repliesList.getContextMenu().getItems().clear();
             if (repliesList.getSelectionModel().getSelectedIndex() >= 0) {
                 repliesList.getContextMenu().getItems().add(new MenuItem("Delete reply"));
                 repliesList.getContextMenu().getItems().get(0).setOnAction(
                         (x) -> {
-                            if(forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).isDeleted()){
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("Delete reply");
-                                alert.setHeaderText(null);
-                                alert.setContentText("This reply has already been deleted!");
-                                Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-                                yes_button.setDefaultButton(false);
-                                alert.showAndWait();
-                            }
-                            else {
-                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                                alert.setTitle("Delete reply");
-                                alert.setHeaderText(null);
-                                alert.setContentText("Are you sure you want to delte this reply?\nThis action is permanent!");
-                                Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-                                yes_button.setDefaultButton(false);
-                                Optional<ButtonType> result = alert.showAndWait();
-                                if (result.get().equals(ButtonType.OK)) {
-                                    forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).setDeleted(true);
-                                    forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).setContent("[Deleted]");
-                                    ThreadService.updateThread(forumThread);
-                                    setListValues();
-                                }
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete reply");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Are you sure you want to delete this reply?\nThis action is permanent!");
+                            Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                            yes_button.setDefaultButton(false);
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get().equals(ButtonType.OK)) {
+                                forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).setDeleted(true);
+                                forumThread.getReplies().get(repliesList.getSelectionModel().getSelectedIndex()).setContent("[Deleted]");
+                                ThreadService.updateThread(forumThread);
+                                repliesList.getContextMenu().getItems().clear();
+                                setListValues();
                             }
                         }
                 );
