@@ -11,10 +11,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.models.ForumThread;
 import org.fis2021.models.ThreadReply;
 import org.fis2021.models.User;
 import org.fis2021.services.ThreadService;
+import org.fis2021.services.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,10 +74,21 @@ public class DisplayThreadController {
         long modifier = 0;
         repliesList.getItems().clear();
         if(forumThread.getReplies()!=null){
+            ThreadService.closeDatabase();
+            UserService.initDatabase();
             for(ThreadReply t : forumThread.getReplies()){
                 modifier += t.getContent().chars().filter(ch -> ch == '\n').count() + 1;
-                repliesList.getItems().add(t.getContent() + "\nAuthor: " + t.getAuthor());
+                try {
+                    if (UserService.getUser(t.getAuthor()).isBanned()) {
+                        repliesList.getItems().add(t.getContent() + "\nAuthor: [Banned]");
+                    }
+                    else{
+                        repliesList.getItems().add(t.getContent() + "\nAuthor: " + t.getAuthor());
+                    }
+                }catch(UserNotFoundException ignored){ }
             }
+            UserService.closeDatabase();
+            ThreadService.initDatabase();
             if(20 * (modifier + forumThread.getReplies().size()) <= 440) {
                 repliesList.setPrefHeight(20 * (modifier + forumThread.getReplies().size()));
                 borderPane.setPrefHeight(BASE_SIZE + 50 + 20 * (modifier + forumThread.getReplies().size()));
@@ -158,7 +171,18 @@ public class DisplayThreadController {
         this.forumThread = forumThread;
         title.setText(forumThread.getTitle());
         webView.getEngine().loadContent(forumThread.getContent());
-        author.setText(forumThread.getAuthor());
+        ThreadService.closeDatabase();
+        UserService.initDatabase();
+        try{
+            if(UserService.getUser(forumThread.getAuthor()).isBanned()){
+                author.setText("[Banned]");
+            }
+            else{
+                author.setText(forumThread.getAuthor());
+            }
+        }catch(UserNotFoundException ignored){ }
+        UserService.closeDatabase();
+        ThreadService.initDatabase();
         closedMessage.setVisible(forumThread.isClosed());
         textArea.setDisable(forumThread.isClosed());
         replyButton.setDisable(forumThread.isClosed());
@@ -192,11 +216,14 @@ public class DisplayThreadController {
 
     @FXML
     private void handleHyperLink(){
-        loadProfilePage(forumThread.getAuthor());
+        loadProfilePage(author.getText());
     }
 
     @FXML
     private void loadProfilePage(String displayUsername){
+        if(displayUsername.equals("[Banned]")){
+            return;
+        }
         try {
             Stage stage = (Stage) borderPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/displayProfile.fxml"));
