@@ -14,6 +14,7 @@ public class ForumThread {
     private Date creationDate;
     private ArrayList<ThreadReply> replies;
     private boolean isClosed = false;
+    private boolean isDeleted = false;
 
     public ForumThread(){
     }
@@ -31,6 +32,14 @@ public class ForumThread {
 
     public void setClosed(boolean closed) {
         isClosed = closed;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public Date getCreationDate() {
@@ -77,15 +86,13 @@ public class ForumThread {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ForumThread forumThread = (ForumThread) o;
-        return Objects.equals(title, forumThread.title) &&
-                Objects.equals(content, forumThread.content) &&
-                Objects.equals(author, forumThread.author);
+        ForumThread that = (ForumThread) o;
+        return isClosed == that.isClosed && isDeleted == that.isDeleted && Objects.equals(title, that.title) && Objects.equals(content, that.content) && Objects.equals(author, that.author) && Objects.equals(creationDate, that.creationDate) && Objects.equals(replies, that.replies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, content, author);
+        return Objects.hash(title, content, author, creationDate, replies, isClosed, isDeleted);
     }
 
     @Override
@@ -93,7 +100,11 @@ public class ForumThread {
         return "ForumThread{" +
                 "title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", author=" + author +
+                ", author='" + author + '\'' +
+                ", creationDate=" + creationDate +
+                ", replies=" + replies +
+                ", isClosed=" + isClosed +
+                ", isDeleted=" + isDeleted +
                 '}';
     }
 }

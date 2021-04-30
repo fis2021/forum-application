@@ -58,8 +58,13 @@ public class HomeController{
     public void sortThreadsAscending(){
         Collections.sort(threads, (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate()));
         threadsList.getItems().clear();
-        for(ForumThread t : threads){
-            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+        for(ForumThread t : threads) {
+            if (!t.isDeleted()) {
+                threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+            }
+            else{
+                threadsList.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
+            }
         }
         if(41 * threads.size() <= 697){
             threadsList.setPrefHeight(41 * threads.size());
@@ -74,7 +79,12 @@ public class HomeController{
         Collections.sort(threads, (o1, o2) -> o1.getCreationDate().compareTo(o2.getCreationDate()));
         threadsList.getItems().clear();
         for(ForumThread t : threads){
-            threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+            if (!t.isDeleted()) {
+                threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+            }
+            else{
+                threadsList.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
+            }
         }
         if(41 * threads.size() <= 697){
             threadsList.setPrefHeight(41 * threads.size());
@@ -98,11 +108,14 @@ public class HomeController{
     }
 
     public void handleListSelectAction(MouseEvent event){
+        threadsList.getContextMenu().getItems().clear();
         try {
-            if(event.getButton() == MouseButton.PRIMARY){
-                loadDisplayThreadPage(threads.get(threadsList.getSelectionModel().getSelectedIndex()).getTitle());
+            if(event.getButton() == MouseButton.PRIMARY) {
+                if (!threads.get(threadsList.getSelectionModel().getSelectedIndex()).isDeleted()) {
+                    loadDisplayThreadPage(threads.get(threadsList.getSelectionModel().getSelectedIndex()).getTitle());
+                }
             }
-            else if(event.getButton() == MouseButton.SECONDARY && user.getRole().equals("Moderator")) {
+            else if(event.getButton() == MouseButton.SECONDARY && user.getRole().equals("Moderator") && !threads.get(threadsList.getSelectionModel().getSelectedIndex()).isDeleted()) {
                 threadsList.getContextMenu().getItems().clear();
                 if (threadsList.getSelectionModel().getSelectedIndex() >= 0) {
                     threadsList.getContextMenu().getItems().add(new MenuItem("Close thread"));
@@ -128,6 +141,40 @@ public class HomeController{
                                     if (result.get().equals(ButtonType.OK)) {
                                         threads.get(threadsList.getSelectionModel().getSelectedIndex()).setClosed(true);
                                         ThreadService.updateThread(threads.get(threadsList.getSelectionModel().getSelectedIndex()));
+                                    }
+                                }
+                            }
+                    );
+                    threadsList.getContextMenu().getItems().add(new MenuItem("Delete thread"));
+                    threadsList.getContextMenu().getItems().get(1).setOnAction(
+                            (x) -> {
+                                if(threads.get(threadsList.getSelectionModel().getSelectedIndex()).isDeleted()){
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Delete thread");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("This thread has already been deleted!");
+                                    Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                    yes_button.setDefaultButton(false);
+                                    alert.showAndWait();
+                                }
+                                else {
+                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                    alert.setTitle("Delete thread");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("Are you sure you want to delete this thread?\nThis action is permanent!");
+                                    Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                    yes_button.setDefaultButton(false);
+                                    Optional<ButtonType> result = alert.showAndWait();
+                                    if (result.get().equals(ButtonType.OK)) {
+                                        threads.get(threadsList.getSelectionModel().getSelectedIndex()).setDeleted(true);
+                                        ThreadService.setThreadAsDeleted(threads.get(threadsList.getSelectionModel().getSelectedIndex()).getTitle());
+                                        if(sortChoice.getSelectionModel().getSelectedIndex() == 0) {
+                                            sortThreadsAscending();
+                                        }
+                                        else{
+                                            sortThreadsDescending();
+                                        }
+                                        threadsList.getContextMenu().getItems().clear();
                                     }
                                 }
                             }
