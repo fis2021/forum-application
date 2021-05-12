@@ -13,24 +13,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
-import static org.fis2021.services.FileSystemService.getPathToFile;
-
 public class UserService {
 
     private static ObjectRepository<User> userRepository;
 
-    private static Nitrite database;
-
-    public static void initDatabase() {
-        database = Nitrite.builder()
-                .filePath(getPathToFile("forumapp.db").toFile())
-                .openOrCreate("admin", "admin");
-
-        userRepository = database.getRepository(User.class);
-    }
-
-    public static void closeDatabase(){
-        database.close();
+    public static void initService() {
+        userRepository = DatabaseService.getDatabase().getRepository(User.class);
     }
 
     public static void addUser(String username, String password, String role) throws UsernameAlreadyExistsException {

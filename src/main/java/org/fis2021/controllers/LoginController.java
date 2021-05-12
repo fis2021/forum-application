@@ -88,8 +88,6 @@ public class LoginController {
             HomeController controller = loader.getController();
             controller.setUser(u);
             stage.setUserData(u);
-            UserService.closeDatabase();
-            ThreadService.initDatabase();
             controller.setThreads();
             Scene scene = new Scene(homeRoot, 640, 800);
             stage.setTitle("Forum App - Home");

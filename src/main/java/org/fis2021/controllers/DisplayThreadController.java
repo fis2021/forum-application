@@ -74,8 +74,6 @@ public class DisplayThreadController {
         long modifier = 0;
         repliesList.getItems().clear();
         if(forumThread.getReplies()!=null){
-            ThreadService.closeDatabase();
-            UserService.initDatabase();
             for(ThreadReply t : forumThread.getReplies()){
                 modifier += t.getContent().chars().filter(ch -> ch == '\n').count() + 1;
                 try {
@@ -87,8 +85,6 @@ public class DisplayThreadController {
                     }
                 }catch(UserNotFoundException ignored){ }
             }
-            UserService.closeDatabase();
-            ThreadService.initDatabase();
             if(20 * (modifier + forumThread.getReplies().size()) <= 440) {
                 repliesList.setPrefHeight(20 * (modifier + forumThread.getReplies().size()));
                 borderPane.setPrefHeight(BASE_SIZE + 50 + 20 * (modifier + forumThread.getReplies().size()));
@@ -171,8 +167,6 @@ public class DisplayThreadController {
         this.forumThread = forumThread;
         title.setText(forumThread.getTitle());
         webView.getEngine().loadContent(forumThread.getContent());
-        ThreadService.closeDatabase();
-        UserService.initDatabase();
         try{
             if(UserService.getUser(forumThread.getAuthor()).isBanned()){
                 author.setText("[Banned]");
@@ -181,8 +175,6 @@ public class DisplayThreadController {
                 author.setText(forumThread.getAuthor());
             }
         }catch(UserNotFoundException ignored){ }
-        UserService.closeDatabase();
-        ThreadService.initDatabase();
         closedMessage.setVisible(forumThread.isClosed());
         textArea.setDisable(forumThread.isClosed());
         replyButton.setDisable(forumThread.isClosed());

@@ -1,7 +1,5 @@
 package org.fis2021.controllers;
 
-
-import com.sun.javafx.scene.control.ContextMenuContent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -70,15 +68,11 @@ public class DisplayProfileController {
                 threads.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
             }
         }
-        ThreadService.closeDatabase();
-        UserService.initDatabase();
         try {
             if (UserService.getUser(displayedUsername).getRole().equals("Moderator") && vBox.getChildren().size() > 2) {
                 vBox.getChildren().remove(2);
             }
         }catch(UserNotFoundException ignored){ }
-        UserService.closeDatabase();
-        ThreadService.initDatabase();
         if(41 * threadsList.size() <= 697){
             threads.setPrefHeight(41 * threadsList.size());
         }
@@ -222,8 +216,6 @@ public class DisplayProfileController {
 
     @FXML
     public void handleBanAction(){
-        ThreadService.closeDatabase();
-        UserService.initDatabase();
         User userAux = new User();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Ban User");
@@ -239,7 +231,5 @@ public class DisplayProfileController {
             userAux.setBanned(true);
             UserService.updateUser(userAux);
         }
-        UserService.closeDatabase();
-        ThreadService.initDatabase();
     }
 }
