@@ -59,8 +59,6 @@ public class HomeController{
     public void sortThreadsAscending(){
         Collections.sort(threads, (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate()));
         threadsList.getItems().clear();
-        ThreadService.closeDatabase();
-        UserService.initDatabase();
         for(ForumThread t : threads) {
             if (!t.isDeleted()) {
                 try{
@@ -83,8 +81,6 @@ public class HomeController{
                 }catch (UserNotFoundException ignored){ }
             }
         }
-        UserService.closeDatabase();
-        ThreadService.initDatabase();
         if(41 * threads.size() <= 697){
             threadsList.setPrefHeight(41 * threads.size());
         }
@@ -97,8 +93,6 @@ public class HomeController{
     public void sortThreadsDescending(){
         Collections.sort(threads, (o1, o2) -> o1.getCreationDate().compareTo(o2.getCreationDate()));
         threadsList.getItems().clear();
-        ThreadService.closeDatabase();
-        UserService.initDatabase();
         for(ForumThread t : threads) {
             if (!t.isDeleted()) {
                 try{
@@ -121,8 +115,6 @@ public class HomeController{
                 }catch (UserNotFoundException ignored){ }
             }
         }
-        UserService.closeDatabase();
-        ThreadService.initDatabase();
         if(41 * threads.size() <= 697){
             threadsList.setPrefHeight(41 * threads.size());
         }
@@ -248,8 +240,6 @@ public class HomeController{
     @FXML
     private void loadLoginPage(){
         try {
-            ThreadService.closeDatabase();
-            UserService.initDatabase();
             Stage stage = (Stage) borderPane.getScene().getWindow();
             Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
             Scene scene = new Scene(loginRoot, 640, 800);
