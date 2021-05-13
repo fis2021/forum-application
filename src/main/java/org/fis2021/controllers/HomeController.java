@@ -18,6 +18,7 @@ import org.fis2021.services.UserService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 
 public class HomeController{
@@ -40,19 +41,92 @@ public class HomeController{
 
     @FXML
     public void initialize() {
-        sortChoice.getItems().addAll("Newest", "Oldest");
+        sortChoice.getItems().addAll("Newest", "Oldest", "Most popular", "Least popular");
         sortChoice.getSelectionModel().select(0);
         sortChoice.setOnAction((event -> {
             int selection = sortChoice.getSelectionModel().getSelectedIndex();
             if(selection == 0){
                 sortThreadsAscending();
             }
-            else{
+            else if(selection == 1){
                 sortThreadsDescending();
+            }
+            else if(selection == 2){
+                sortThreadsPopular();
+            }
+            else{
+                sortThreadsUnpopular();
             }
         }));
         menu = new ContextMenu();
         threadsList.setContextMenu(menu);
+    }
+
+    private void sortThreadsPopular(){
+        Collections.sort(threads, Comparator.comparingInt(o -> o.getReplies().size()));
+        Collections.reverse(threads);
+        threadsList.getItems().clear();
+        for(ForumThread t : threads) {
+            if (!t.isDeleted()) {
+                try{
+                    if(UserService.getUser(t.getAuthor()).isBanned()){
+                        threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: [Banned]");
+                    }
+                    else{
+                        threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+                    }
+                }catch (UserNotFoundException ignored){ }
+            }
+            else{
+                try{
+                    if(UserService.getUser(t.getAuthor()).isBanned()){
+                        threadsList.getItems().add("Title: [Deleted]\n" + "Author: [Banned]");
+                    }
+                    else{
+                        threadsList.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
+                    }
+                }catch (UserNotFoundException ignored){ }
+            }
+        }
+        if(41 * threads.size() <= 697){
+            threadsList.setPrefHeight(41 * threads.size());
+        }
+        else{
+            threadsList.setPrefHeight(697);
+        }
+    }
+
+    private void sortThreadsUnpopular(){
+        Collections.sort(threads, Comparator.comparingInt(o -> o.getReplies().size()));
+        threadsList.getItems().clear();
+        for(ForumThread t : threads) {
+            if (!t.isDeleted()) {
+                try{
+                    if(UserService.getUser(t.getAuthor()).isBanned()){
+                        threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: [Banned]");
+                    }
+                    else{
+                        threadsList.getItems().add("Title: " + t.getTitle() + "\n" + "Author: " + t.getAuthor());
+                    }
+                }catch (UserNotFoundException ignored){ }
+            }
+            else{
+                try{
+                    if(UserService.getUser(t.getAuthor()).isBanned()){
+                        threadsList.getItems().add("Title: [Deleted]\n" + "Author: [Banned]");
+                    }
+                    else{
+                        threadsList.getItems().add("Title: [Deleted]\n" + "Author: " + t.getAuthor());
+                    }
+                }catch (UserNotFoundException ignored){ }
+            }
+        }
+        if(41 * threads.size() <= 697){
+            threadsList.setPrefHeight(41 * threads.size());
+        }
+        else{
+            threadsList.setPrefHeight(697);
+        }
     }
 
     @FXML
