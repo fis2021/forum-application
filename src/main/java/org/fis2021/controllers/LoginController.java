@@ -48,11 +48,23 @@ public class LoginController {
         try{
             String stored_password = UserService.getHashedUserPassword(username);
             if(stored_password.equals(encoded_password)){
-                if(!UserService.getUser(username).isBanned()) {
+                if(!UserService.getUser(username).isBanned() && !UserService.getUser(username).isTempBanned()) {
                     loadHomePage();
                 }
-                else{
+                else if(UserService.getUser(username).isBanned()){
                     loginMessage.setText("You have been banned!");
+                }
+                else if(UserService.getUser(username).isTempBanned()){
+                    if(UserService.getUser(username).getUnlockDate() > (System.currentTimeMillis()/1000L)){
+                        loginMessage.setText("You have been temporarily banned!");
+                    }
+                    else{
+                        User u = UserService.getUser(username);
+                        u.setTempBanned(false);
+                        u.setUnlockDate(0);
+                        UserService.updateUser(u);
+                        loadHomePage();
+                    }
                 }
                 return;
             }

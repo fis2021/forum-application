@@ -9,6 +9,8 @@ public class User {
     private String password;
     private String role;
     private boolean isBanned = false;
+    private boolean isTempBanned = false;
+    private long unlockDate = 0;
 
     public User() {
     }
@@ -23,12 +25,28 @@ public class User {
         return username;
     }
 
+    public long getUnlockDate() {
+        return unlockDate;
+    }
+
+    public void setUnlockDate(long unlockDate) {
+        this.unlockDate = unlockDate;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public boolean isTempBanned() {
+        return isTempBanned;
+    }
+
+    public void setTempBanned(boolean tempBanned) {
+        isTempBanned = tempBanned;
     }
 
     public void setPassword(String password) {
