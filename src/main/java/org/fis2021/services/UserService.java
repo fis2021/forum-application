@@ -7,6 +7,7 @@ import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.fis2021.exceptions.UserNotFoundException;
 import org.fis2021.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.models.User;
+import org.w3c.dom.ls.LSOutput;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,6 +17,10 @@ import java.util.Objects;
 public class UserService {
 
     private static ObjectRepository<User> userRepository;
+
+    public static ObjectRepository<User> getUserRepository() {
+        return userRepository;
+    }
 
     public static void initService() {
         userRepository = DatabaseService.getDatabase().getRepository(User.class);
