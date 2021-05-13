@@ -18,7 +18,7 @@ public class App extends Application {
         stage.setWidth(640);
         stage.setResizable(false);
         FileSystemService.initProdDirectory();
-        DatabaseService.initDatabase();
+        DatabaseService.initDatabaseProd();
         UserService.initService();
         ThreadService.initService();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));

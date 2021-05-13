@@ -7,10 +7,20 @@ public class DatabaseService {
 
     private static Nitrite database;
 
-    public static void initDatabase() {
+    public static void initDatabaseProd() {
         database = Nitrite.builder()
                 .filePath(FileSystemService.getPathToProdFile("forumapp.db").toFile())
                 .openOrCreate("admin", "admin");
+    }
+
+    public static void initDatabaseTest(){
+        database = Nitrite.builder()
+                .filePath(FileSystemService.getPathToTestFile("forumapp.db").toFile())
+                .openOrCreate("admin", "admin");
+    }
+
+    public static void closeDatabase(){
+        database.close();
     }
 
     public static Nitrite getDatabase(){
