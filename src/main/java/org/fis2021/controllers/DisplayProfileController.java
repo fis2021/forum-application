@@ -232,4 +232,24 @@ public class DisplayProfileController {
             UserService.updateUser(userAux);
         }
     }
+
+    @FXML
+    public void handleTempBanAction(){
+        User userAux = new User();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Ban User");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to ban this user for 24 hours?");
+        Button yes_button = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+        yes_button.setDefaultButton(false);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)) {
+            try {
+                userAux = UserService.getUser(displayedUsername);
+            }catch(UserNotFoundException ignored){ }
+            userAux.setTempBanned(true);
+            userAux.setUnlockDate((System.currentTimeMillis()/1000L) + 86400);
+            UserService.updateUser(userAux);
+        }
+    }
 }
