@@ -12,7 +12,7 @@ public class ForumThread {
     private String content;
     private String author;
     private Date creationDate;
-    private ArrayList<ThreadReply> replies;
+    private ArrayList<ThreadReply> replies = new ArrayList<>();
     private boolean isClosed = false;
     private boolean isDeleted = false;
 
