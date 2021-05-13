@@ -63,7 +63,7 @@ public class HomeController{
     }
 
     private void sortThreadsPopular(){
-        Collections.sort(threads, Comparator.comparingInt(o -> o.getReplies().size()));
+        Collections.sort(threads, Comparator.comparingInt(o -> (o.getReplies() != null ? o.getReplies().size() : 0)));
         Collections.reverse(threads);
         threadsList.getItems().clear();
         for(ForumThread t : threads) {
@@ -97,7 +97,7 @@ public class HomeController{
     }
 
     private void sortThreadsUnpopular(){
-        Collections.sort(threads, Comparator.comparingInt(o -> o.getReplies().size()));
+        Collections.sort(threads, Comparator.comparingInt(o -> (o.getReplies() != null ? o.getReplies().size() : 0)));
         threadsList.getItems().clear();
         for(ForumThread t : threads) {
             if (!t.isDeleted()) {
