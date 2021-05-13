@@ -11,6 +11,10 @@ public class ThreadService {
 
     private static ObjectRepository<ForumThread> threadRepository;
 
+    public static ObjectRepository<ForumThread> getThreadRepository() {
+        return threadRepository;
+    }
+
     public static void initService() {
         threadRepository = DatabaseService.getDatabase().getRepository(ForumThread.class);
     }
