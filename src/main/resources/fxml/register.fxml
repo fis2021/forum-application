@@ -13,22 +13,22 @@
 
     <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="usernameField" id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <PasswordField fx:id="passwordField" id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
     <Label text="Role:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-    <ChoiceBox fx:id="role" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+    <ChoiceBox fx:id="role" prefWidth="150.0" id="roleChoice" GridPane.columnIndex="1" GridPane.rowIndex="3">
     </ChoiceBox>
 
-    <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <Text fx:id="registrationMessage" id="message" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-    <Button onAction="#loadLoginPage" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <Button onAction="#loadLoginPage" id="loadLoginButton" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 
-    <Button onAction="#handleRegisterAction" text="Register" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+    <Button onAction="#handleRegisterAction" id="registerButton" text="Register" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
