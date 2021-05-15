@@ -39,6 +39,10 @@ public class HomeController{
         user = u;
     }
 
+    public ListView<String> getThreadsList() {
+        return threadsList;
+    }
+
     @FXML
     public void initialize() {
         sortChoice.getItems().addAll("Newest", "Oldest", "Most popular", "Least popular");
