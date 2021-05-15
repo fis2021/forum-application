@@ -56,6 +56,10 @@ class HomeTest {
         ThreadService.updateThread(t2);
     }
 
+    @AfterAll
+    static void afterAll() {
+        DatabaseService.closeDatabase();
+    }
 
     @Start
     public void start(Stage stage) throws Exception {
