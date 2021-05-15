@@ -28,6 +28,10 @@ public class CreateThreadController {
     @FXML
     private Label errorMessage;
 
+    public Label getErrorMessage() {
+        return errorMessage;
+    }
+
     private User user;
 
     public void setUser(User u){
