@@ -13,17 +13,17 @@
 
     <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="usernameField" id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <PasswordField fx:id="passwordField" id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Button onAction="#loadRegisterPage" text="Register" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <Button onAction="#loadRegisterPage" id="loadRegisterButton" text="Register" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 
-    <Button onAction="#handleLoginAction" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+    <Button onAction="#handleLoginAction" id="loginButton" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
 
-    <Text fx:id="loginMessage" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <Text fx:id="loginMessage" id="message" GridPane.columnIndex="1" GridPane.rowIndex="6" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
