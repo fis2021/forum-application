@@ -13,14 +13,14 @@
          <children>
             <HBox prefHeight="25.0" prefWidth="136.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#loadLoginPage" text="Log out" />
+                  <Button mnemonicParsing="false" id="backButton" onAction="#loadLoginPage" text="Log out" />
                </children>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="247.0" />
             <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="227.0" spacing="5.0">
                <children>
-                  <ChoiceBox fx:id="sortChoice" prefHeight="25.0" prefWidth="101.0" />
-                  <Button mnemonicParsing="false" onAction="#loadCreateThreadPage" prefHeight="25.0" prefWidth="105.0" text="Create Thread" />
+                  <ChoiceBox fx:id="sortChoice" id="sortChoice" prefHeight="25.0" prefWidth="101.0" />
+                  <Button mnemonicParsing="false" id="loadCreateThread" onAction="#loadCreateThreadPage" prefHeight="25.0" prefWidth="105.0" text="Create Thread" />
                </children>
             </HBox>
          </children>
