@@ -129,9 +129,6 @@ public class DisplayThreadController {
         setListValues();
         textArea.clear();
         ThreadService.updateThread(forumThread);
-        if(forumThread.getReplies().size() == 1){
-            loadDisplayThreadPage(forumThread.getTitle());
-        }
     }
 
     @FXML
