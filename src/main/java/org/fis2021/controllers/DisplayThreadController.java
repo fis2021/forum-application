@@ -62,6 +62,9 @@ public class DisplayThreadController {
 
     private ContextMenu contextMenu;
 
+    public ListView<String> getRepliesList() {
+        return repliesList;
+    }
 
     public void initialize(){
         textArea.setPromptText("Type in your reply...");
