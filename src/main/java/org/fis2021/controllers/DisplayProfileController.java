@@ -49,6 +49,14 @@ public class DisplayProfileController {
         return displayedUsername;
     }
 
+    public Label getAuthor() {
+        return author;
+    }
+
+    public ListView<String> getThreads() {
+        return threads;
+    }
+
     public ContextMenu menu;
 
     public void initialize(){
