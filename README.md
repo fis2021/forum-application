@@ -26,6 +26,22 @@ TestFX plugin;
 
 JaCoCo plugin.
 
+# Setup
+
+Clone the repo:
+
+    git clone https://github.com/fis2021/forum-application.git
+
+Open the project as a Maven project, then use the following commands:
+
+    mvn dependency:resolve
+    mvn clean install
+
+Then reload the project and use the command:
+
+    mvn javafx:run
+
+If everything was set up accordingly, the application should be up and running.
 
 # Registration and Log In
 Before using the application, every user has to register for an account using a unique username and a password. On this page, there are available two types of accounts:
