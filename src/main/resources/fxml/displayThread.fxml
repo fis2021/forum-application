@@ -30,7 +30,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Hyperlink fx:id="author" onAction="#handleHyperLink">
+                        <Hyperlink fx:id="author" id="author" onAction="#handleHyperLink">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -63,14 +63,14 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="textArea" prefHeight="106.0" prefWidth="500.0">
+                  <TextArea fx:id="textArea" prefHeight="106.0" id="replyArea" prefWidth="500.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin>
                   </TextArea>
                   <HBox alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="500.0">
                      <children>
-                        <Button fx:id="replyButton" mnemonicParsing="false" onAction="#handleReplyButton" text="Reply" />
+                        <Button fx:id="replyButton" mnemonicParsing="false" id="replyButton" onAction="#handleReplyButton" text="Reply" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
@@ -80,7 +80,7 @@
             </VBox>
          </center>
          <top>
-            <Button mnemonicParsing="false" onAction="#loadHomePage" text="Home" BorderPane.alignment="CENTER_RIGHT">
+            <Button mnemonicParsing="false" onAction="#loadHomePage" id="backButton" text="Home" BorderPane.alignment="CENTER_RIGHT">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
