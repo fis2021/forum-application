@@ -142,6 +142,7 @@ public class DisplayProfileController {
             controller.setPreviousThreadTitle(previousThreadTitle);
             controller.setDisplayedUsername(displayedUsername);
             Scene scene = new Scene(displayProfileRoot, 640, 800);
+            scene.setUserData(controller);
             stage.setTitle("Forum App - " + displayUsername);
             stage.setScene(scene);
         } catch (IOException e) {

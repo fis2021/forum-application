@@ -55,7 +55,7 @@
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </VBox.margin>
                   </ListView>
-                  <Label fx:id="closedMessage" prefHeight="21.0" prefWidth="477.0" text="We are sorry, this thread has been closed and no longer allows replies!" textFill="#9e0707">
+                  <Label fx:id="closedMessage" prefHeight="21.0" id="closedMessage" prefWidth="477.0" text="We are sorry, this thread has been closed and no longer allows replies!" textFill="#9e0707">
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" />
                      </VBox.margin>

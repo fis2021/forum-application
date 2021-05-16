@@ -66,6 +66,10 @@ public class DisplayThreadController {
         return repliesList;
     }
 
+    public Label getClosedMessage() {
+        return closedMessage;
+    }
+
     public void initialize(){
         textArea.setPromptText("Type in your reply...");
         textArea.getParent().requestFocus();
@@ -199,6 +203,7 @@ public class DisplayThreadController {
             controller.setUser(user);
             controller.setThreads();
             Scene scene = new Scene(homeRoot, 640, 800);
+            scene.setUserData(controller);
             stage.setTitle("Forum App - Home");
             stage.setScene(scene);
         } catch (IOException e) {
@@ -225,6 +230,7 @@ public class DisplayThreadController {
             controller.setPreviousThreadTitle(forumThread.getTitle());
             controller.setDisplayedUsername(forumThread.getAuthor());
             Scene scene = new Scene(displayProfileRoot, 640, 800);
+            scene.setUserData(controller);
             stage.setTitle("Forum App - " + displayUsername);
             stage.setScene(scene);
         } catch (IOException e) {
